@@ -17,28 +17,15 @@
         (FileOutputStream. (str stormroot path)))
 
       (^List list [this, ^String path]
-        (.list this path true))
-
-      (^List list [this, ^String path, ^boolean full-path]
-        (let [names (.list (File. (str stormroot path)))]
-          (if full-path
-            (map #(str path "/" ^String %) names)
-            (map #(str ^String %) names))))
+        (seq (.list (File. (str stormroot path)))))
 
       (^void delete [this, ^String path]
         (let [full-path (str stormroot path)]
           (when (exists-file? full-path)
             (FileUtils/forceDelete (File. full-path)))))
 
-      (^void delete [this, ^List paths]
-        (doseq [path paths]
-          (.delete this path)))
-
       (^void mkdirs [this, ^String path]
         (FileUtils/forceMkdir (File. (str stormroot path))))
-
-      (^void move [this, ^String from, ^String to]
-        (FileUtils/moveFile (File. (str stormroot from)) (File. (str stormroot to))))
 
       (^boolean isSupportDistributed [this]
         false))))
@@ -54,6 +41,9 @@
     (create-custom-storage storage-name conf)
     (create-local-storage conf)))
 
+(defn list-full-paths [storage path]
+  (map #(str path "/" ^String %) (.list storage path)))
+
 (defn upload-file-to-storage [file storage path]
   (let [stream (.create storage path)]
     (try
@@ -62,7 +52,7 @@
 
 (defn ensure-clean-dir-in-storage [storage path]
   (.mkdirs storage path)
-  (if-let [files (.list storage path)]
+  (if-let [files (seq (list-full-paths storage path))]
     (.delete storage files)))
 
 (defn serialize-to-storage [obj storage path]
