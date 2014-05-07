@@ -497,13 +497,6 @@
 
 
     <dependencies>
-        <!-- reply dependency adds leiningen-style REPL -->
-        <!--<dependency>-->
-            <!--<groupId>reply</groupId>-->
-            <!--<artifactId>reply</artifactId>-->
-            <!--<version>${reply.version}</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
     </dependencies>
 
     <repositories>
