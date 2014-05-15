@@ -1,4 +1,9 @@
 ## 0.9.2-incubating (unreleased)
+ * STORM-317: Add SECURITY.md to release binaries
+ * STORM-310: Change Twitter authentication
+ * STORM-305: Create developer documentation
+ * STORM-280: storm unit tests are failing on windows
+ * STORM-298: Logback file does not include full path for metrics appender fileNamePattern
  * STORM-316: added validation to registermetrics to have timebucketSizeInSecs >= 1
  * STORM-315: Added progress bar when submitting topology
  * STORM-214: Windows: storm.cmd does not properly handle multiple -c arguments
